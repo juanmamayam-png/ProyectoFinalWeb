@@ -5,6 +5,7 @@ import {
   getDoc,
   doc,
   updateDoc,
+  deleteDoc,
   query,
   where,
   orderBy,
@@ -94,6 +95,11 @@ export async function updateGroupStatus(grupoId, estado) {
     batch.update(d.ref, { estado });
   });
   await batch.commit();
+}
+
+export async function deleteIncident(id) {
+  const docRef = doc(db, COLLECTION, id);
+  await deleteDoc(docRef);
 }
 
 export async function getIncidentsByPeriod(startDate, endDate) {

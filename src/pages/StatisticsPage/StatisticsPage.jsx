@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getIncidentsByPeriod } from '../services/incidentService';
+import { getIncidentsByPeriod } from '../../services/incidentService';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   PieChart, Pie, Cell, ResponsiveContainer,
 } from 'recharts';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
 
-const COLORS_PIE = ['#ef4444', '#f59e0b', '#22c55e'];
+const UA_PRIMARY = '#39a12e';
+const COLORS_PIE = ['#ef4444', '#f59e0b', UA_PRIMARY];
 const ESTADOS = ['Reportado', 'En proceso', 'Resuelto'];
 
 function getFirstAndLastOfMonth() {
@@ -78,7 +79,7 @@ export default function StatisticsPage() {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-600"
           />
         </div>
         <div>
@@ -87,12 +88,12 @@ export default function StatisticsPage() {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-600"
           />
         </div>
         <button
           onClick={fetchData}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-primary-700 hover:bg-primary-800"
         >
           Aplicar
         </button>
@@ -104,12 +105,12 @@ export default function StatisticsPage() {
         <>
           {/* Tarjetas resumen */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
-              <p className="text-3xl font-bold text-blue-700">{total}</p>
-              <p className="text-sm text-blue-600 mt-1">Total</p>
+            <div className="bg-primary-50 border border-primary-200 rounded-xl p-4 text-center">
+              <p className="text-3xl font-bold text-primary-700">{total}</p>
+              <p className="text-sm text-primary-600 mt-1">Total</p>
             </div>
             {byEstado.map((e, idx) => {
-              const colors = ['border-red-200 bg-red-50 text-red-700', 'border-yellow-200 bg-yellow-50 text-yellow-700', 'border-green-200 bg-green-50 text-green-700'];
+              const colors = ['border-red-200 bg-red-50 text-red-700', 'border-yellow-200 bg-yellow-50 text-yellow-700', 'border-primary-200 bg-primary-50 text-primary-700'];
               return (
                 <div key={e.name} className={`border rounded-xl p-4 text-center ${colors[idx]}`}>
                   <p className="text-3xl font-bold">{e.cantidad}</p>
@@ -130,7 +131,7 @@ export default function StatisticsPage() {
                     <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-30} textAnchor="end" />
                     <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                     <Tooltip />
-                    <Bar dataKey="cantidad" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="cantidad" fill={UA_PRIMARY} radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
@@ -201,7 +202,7 @@ export default function StatisticsPage() {
                           <td className="px-4 py-3 text-gray-500">{fecha}</td>
                           <td className="px-4 py-3">
                             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                              i.estado === 'Resuelto' ? 'bg-green-100 text-green-700' :
+                              i.estado === 'Resuelto' ? 'bg-primary-100 text-primary-700' :
                               i.estado === 'En proceso' ? 'bg-yellow-100 text-yellow-700' :
                               'bg-red-100 text-red-700'
                             }`}>

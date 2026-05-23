@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../../contexts/AuthContext';
 
 export default function Navbar() {
   const { currentUser, userProfile, logout } = useAuth();
@@ -22,25 +22,21 @@ export default function Navbar() {
   function isActive(path) {
     return location.pathname === path
       ? 'text-white font-semibold border-b-2 border-white'
-      : 'text-blue-100 hover:text-white transition-colors duration-150';
+      : 'text-primary-100 hover:text-white transition-colors duration-150';
   }
 
   return (
-    <nav className="bg-blue-700 shadow-lg">
+    <nav className="shadow-lg bg-primary-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <span className="text-blue-700 font-bold text-sm">UA</span>
-              </div>
-              <span className="text-white font-bold text-lg hidden sm:block">
-                UniAmazonia Incidentes
-              </span>
-              <span className="text-white font-bold text-base sm:hidden">
-                UA Incidentes
-              </span>
+              <img
+                src="/src/Icons/LogoUANegativo.png"
+                alt="Logo Universidad de la Amazonia"
+                className="h-14 w-auto object-contain drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)]"
+              />
             </Link>
           </div>
 
@@ -74,12 +70,12 @@ export default function Navbar() {
                 {userProfile?.nombre || currentUser?.email}
               </p>
               {isAdmin && (
-                <p className="text-blue-200 text-xs">Administrador</p>
+                <p className="text-primary-200 text-xs">Administrador</p>
               )}
             </div>
             <button
               onClick={handleLogout}
-              className="bg-blue-600 hover:bg-blue-500 text-white text-sm px-3 py-1.5 rounded-md transition-colors duration-150 border border-blue-500"
+              className="bg-primary-800 hover:bg-primary-700 text-white text-sm px-3 py-1.5 rounded-md transition-colors duration-150 border border-primary-700"
             >
               Cerrar sesión
             </button>
@@ -108,24 +104,24 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-blue-800 px-4 pt-2 pb-4 space-y-2">
+        <div className="md:hidden bg-primary-900 px-4 pt-2 pb-4 space-y-2">
           <Link
             to="/"
-            className="block text-blue-100 hover:text-white py-2 transition-colors"
+            className="block text-primary-100 hover:text-white py-2 transition-colors"
             onClick={() => setMenuOpen(false)}
           >
             Inicio
           </Link>
           <Link
             to="/report"
-            className="block text-blue-100 hover:text-white py-2 transition-colors"
+            className="block text-primary-100 hover:text-white py-2 transition-colors"
             onClick={() => setMenuOpen(false)}
           >
             Reportar Incidente
           </Link>
           <Link
             to="/my-incidents"
-            className="block text-blue-100 hover:text-white py-2 transition-colors"
+            className="block text-primary-100 hover:text-white py-2 transition-colors"
             onClick={() => setMenuOpen(false)}
           >
             Mis Incidentes
@@ -134,30 +130,30 @@ export default function Navbar() {
             <>
               <Link
                 to="/admin"
-                className="block text-blue-100 hover:text-white py-2 transition-colors"
+                className="block text-primary-100 hover:text-white py-2 transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 Panel Admin
               </Link>
               <Link
                 to="/statistics"
-                className="block text-blue-100 hover:text-white py-2 transition-colors"
+                className="block text-primary-100 hover:text-white py-2 transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 Estadísticas
               </Link>
             </>
           )}
-          <div className="border-t border-blue-600 pt-3 mt-2">
+          <div className="border-t border-primary-700 pt-3 mt-2">
             <p className="text-white text-sm font-medium">
               {userProfile?.nombre || currentUser?.email}
             </p>
             {isAdmin && (
-              <p className="text-blue-300 text-xs mb-2">Administrador</p>
+              <p className="text-primary-300 text-xs mb-2">Administrador</p>
             )}
             <button
               onClick={() => { setMenuOpen(false); handleLogout(); }}
-              className="mt-2 w-full bg-blue-600 hover:bg-blue-500 text-white text-sm px-3 py-2 rounded-md transition-colors duration-150"
+              className="mt-2 w-full bg-primary-800 hover:bg-primary-700 text-white text-sm px-3 py-2 rounded-md transition-colors duration-150"
             >
               Cerrar sesión
             </button>

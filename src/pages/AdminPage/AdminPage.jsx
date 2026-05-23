@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getIncidents, updateIncidentStatus, groupIncidents, updateGroupStatus } from '../services/incidentService';
-import IncidentStatusBadge from '../components/incidents/IncidentStatusBadge';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Alert from '../components/ui/Alert';
+import { getIncidents, updateIncidentStatus, groupIncidents, updateGroupStatus, deleteIncident } from '../../services/incidentService';
+import { deleteIncidentImage } from '../../services/storageService';
+import IncidentStatusBadge from '../../components/incidents/IncidentStatusBadge/IncidentStatusBadge';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
+import Alert from '../../components/ui/Alert/Alert';
 import { Link } from 'react-router-dom';
 
 const ESTADOS = ['Todos', 'Reportado', 'En proceso', 'Resuelto'];
@@ -30,6 +31,8 @@ export default function AdminPage() {
   const [selected, setSelected] = useState([]);
   const [updatingId, setUpdatingId] = useState(null);
   const [grouping, setGrouping] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -117,6 +120,25 @@ export default function AdminPage() {
     }
   }
 
+  async function handleDelete(incident) {
+    setDeletingId(incident.id);
+    setConfirmDelete(null);
+    setError('');
+    try {
+      await deleteIncidentImage(incident.imagenURL);
+      await deleteIncident(incident.id);
+      setIncidents((prev) => prev.filter((i) => i.id !== incident.id));
+      setSelected((prev) => prev.filter((x) => x !== incident.id));
+      setSuccess('Incidente eliminado correctamente.');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      console.error(err);
+      setError('Error al eliminar el incidente.');
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   const filtered = incidents.filter((i) => {
     const estadoOk = filterEstado === 'Todos' || i.estado === filterEstado;
     const tipoOk = filterTipo === 'Todos' || i.tipo === filterTipo;
@@ -148,7 +170,7 @@ export default function AdminPage() {
           <select
             value={filterEstado}
             onChange={(e) => setFilterEstado(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-600 bg-white"
           >
             {ESTADOS.map((e) => (
               <option key={e} value={e}>{e}</option>
@@ -160,7 +182,7 @@ export default function AdminPage() {
           <select
             value={filterTipo}
             onChange={(e) => setFilterTipo(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-600 bg-white"
           >
             {TIPOS.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -174,26 +196,26 @@ export default function AdminPage() {
 
       {/* Selection toolbar */}
       {selected.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 flex flex-wrap items-center gap-3">
-          <span className="text-blue-700 text-sm font-medium">
+        <div className="bg-primary-50 border border-primary-200 rounded-xl p-3 mb-4 flex flex-wrap items-center gap-3">
+          <span className="text-primary-800 text-sm font-medium">
             {selected.length} seleccionado{selected.length !== 1 ? 's' : ''}
           </span>
           <button
             onClick={handleGroup}
             disabled={grouping || selected.length < 2}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors"
+            className="text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors disabled:opacity-60 bg-primary-700 hover:bg-primary-800"
           >
             {grouping ? 'Agrupando...' : 'Agrupar seleccionados'}
           </button>
           <button
             onClick={clearSelection}
-            className="text-blue-600 hover:text-blue-800 text-sm transition-colors"
+            className="text-primary-700 hover:text-primary-900 text-sm transition-colors"
           >
             Limpiar selección
           </button>
           <button
             onClick={selectAll}
-            className="text-blue-600 hover:text-blue-800 text-sm transition-colors"
+            className="text-primary-700 hover:text-primary-900 text-sm transition-colors"
           >
             Seleccionar todos ({filtered.length})
           </button>
@@ -219,7 +241,7 @@ export default function AdminPage() {
                       onChange={() =>
                         selected.length === filtered.length ? clearSelection() : selectAll()
                       }
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-primary-700 focus:ring-primary-600"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Tipo</th>
@@ -231,6 +253,7 @@ export default function AdminPage() {
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Cambiar estado</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Grupo</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Detalle</th>
+                  <th className="px-4 py-3"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -239,7 +262,7 @@ export default function AdminPage() {
                     key={incident.id}
                     className={
                       "hover:bg-gray-50 transition-colors " +
-                      (selected.includes(incident.id) ? 'bg-blue-50' : '')
+                      (selected.includes(incident.id) ? 'bg-primary-50' : '')
                     }
                   >
                     <td className="px-4 py-3">
@@ -247,7 +270,7 @@ export default function AdminPage() {
                         type="checkbox"
                         checked={selected.includes(incident.id)}
                         onChange={() => toggleSelect(incident.id)}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="rounded border-gray-300 text-primary-700 focus:ring-primary-600"
                       />
                     </td>
                     <td className="px-4 py-3 font-medium text-gray-800">
@@ -269,7 +292,7 @@ export default function AdminPage() {
                         value={incident.estado}
                         onChange={(e) => handleStatusChange(incident, e.target.value)}
                         disabled={updatingId === incident.id}
-                        className="border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white disabled:opacity-50"
+                        className="border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary-600 bg-white disabled:opacity-50"
                       >
                         <option value="Reportado">Reportado</option>
                         <option value="En proceso">En proceso</option>
@@ -288,15 +311,66 @@ export default function AdminPage() {
                     <td className="px-4 py-3">
                       <Link
                         to={"/incident/" + incident.id}
-                        className="text-blue-600 hover:text-blue-800 text-xs font-medium transition-colors"
+                        className="text-primary-700 hover:text-primary-900 text-xs font-medium transition-colors"
                       >
                         Ver
                       </Link>
+                    </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => setConfirmDelete(incident)}
+                        disabled={deletingId === incident.id}
+                        className="text-red-500 hover:text-red-700 transition-colors disabled:opacity-40"
+                        title="Eliminar incidente"
+                      >
+                        {deletingId === incident.id ? (
+                          <div className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        )}
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+      {/* Confirm delete modal */}
+      {confirmDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">Eliminar incidente</h3>
+                <p className="text-sm text-gray-500">Esta acción no se puede deshacer.</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-700 mb-6">
+              Se eliminará el incidente <span className="font-medium">"{confirmDelete.tipo}"</span> reportado por <span className="font-medium">{confirmDelete.usuarioNombre}</span>.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setConfirmDelete(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => handleDelete(confirmDelete)}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+              >
+                Sí, eliminar
+              </button>
+            </div>
           </div>
         </div>
       )}

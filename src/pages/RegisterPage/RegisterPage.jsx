@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import Alert from '../components/ui/Alert';
+import { useAuth } from '../../contexts/AuthContext';
+import Alert from '../../components/ui/Alert/Alert';
 
 export default function RegisterPage() {
   const [nombre, setNombre] = useState('');
@@ -42,16 +42,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary-800 to-primary-700">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-700 rounded-full mb-4">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Crear Cuenta</h1>
-          <p className="text-gray-500 mt-1">UniAmazonia Incidentes</p>
         </div>
 
         {error && <Alert type="error" message={error} className="mb-4" />}
@@ -66,7 +65,7 @@ export default function RegisterPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
               placeholder="Juan Pérez"
             />
           </div>
@@ -79,8 +78,8 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="tu@correo.com"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
+              placeholder="correo@udla.edu.co"
             />
           </div>
           <div>
@@ -92,7 +91,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
               placeholder="Mínimo 6 caracteres"
             />
           </div>
@@ -105,14 +104,14 @@ export default function RegisterPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
               placeholder="Repite tu contraseña"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2.5 rounded-lg transition-colors"
+            className="w-full bg-primary-700 hover:bg-primary-800 disabled:bg-primary-600 disabled:opacity-70 text-white font-semibold py-2.5 rounded-lg transition-colors"
           >
             {loading ? 'Creando cuenta...' : 'Registrarse'}
           </button>
@@ -120,7 +119,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           ¿Ya tienes cuenta?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline font-medium">
+          <Link to="/login" className="text-primary-700 hover:underline font-medium">
             Inicia sesión
           </Link>
         </p>
