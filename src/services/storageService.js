@@ -1,4 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage } from '../firebase/config';
 
 export const uploadIncidentImage = async (file, userId) => {
@@ -6,4 +6,13 @@ export const uploadIncidentImage = async (file, userId) => {
   const storageRef = ref(storage, fileName);
   const snapshot = await uploadBytes(storageRef, file);
   return getDownloadURL(snapshot.ref);
+};
+
+export const deleteIncidentImage = async (imagenURL) => {
+  if (!imagenURL) return;
+  // Extract the storage path from the download URL
+  const match = decodeURIComponent(imagenURL).match(/\/o\/(.+?)(\?|$)/);
+  if (!match) return;
+  const imageRef = ref(storage, match[1]);
+  await deleteObject(imageRef);
 };

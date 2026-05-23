@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { getIncidents, getUserIncidents } from '../services/incidentService';
-import IncidentCard from '../components/incidents/IncidentCard';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Alert from '../components/ui/Alert';
+import { useAuth } from '../../contexts/AuthContext';
+import { getIncidents, getUserIncidents } from '../../services/incidentService';
+import IncidentCard from '../../components/incidents/IncidentCard/IncidentCard';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
+import Alert from '../../components/ui/Alert/Alert';
 
 export default function HomePage() {
   const { currentUser, userProfile } = useAuth();
@@ -44,10 +44,10 @@ export default function HomePage() {
     {
       label: 'Total',
       value: total,
-      color: 'bg-blue-50 border-blue-200',
-      textColor: 'text-blue-700',
+      color: 'bg-primary-50 border-primary-200',
+      textColor: 'text-primary-700',
       icon: (
-        <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
       ),
@@ -77,10 +77,10 @@ export default function HomePage() {
     {
       label: 'Resueltos',
       value: resueltos,
-      color: 'bg-green-50 border-green-200',
-      textColor: 'text-green-700',
+      color: 'bg-primary-50 border-primary-200',
+      textColor: 'text-primary-700',
       icon: (
-        <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
@@ -96,13 +96,13 @@ export default function HomePage() {
           </h1>
           <p className="text-gray-500 mt-1">
             {isAdmin
-              ? 'Panel de administración — Gestiona todos los incidentes del campus.'
-              : 'Gestiona y da seguimiento a tus reportes de incidentes.'}
+              ? 'Panel de administración'
+              : 'Gestiona y sigue tus reportes de incidentes.'}
           </p>
         </div>
         <Link
           to="/report"
-          className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg shadow-sm transition-colors"
+          className="inline-flex items-center space-x-2 text-white font-semibold px-5 py-2.5 rounded-lg shadow-sm transition-colors bg-primary-700 hover:bg-primary-800"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -137,7 +137,7 @@ export default function HomePage() {
           <h2 className="text-lg font-semibold text-gray-800">Incidentes Recientes</h2>
           <Link
             to={isAdmin ? '/admin' : '/my-incidents'}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+            className="text-primary-700 hover:text-primary-900 text-sm font-medium transition-colors"
           >
             Ver todos
           </Link>
@@ -153,7 +153,7 @@ export default function HomePage() {
             <p className="text-gray-500 text-sm mb-4">No hay incidentes reportados aun.</p>
             <Link
               to="/report"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+              className="inline-block text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors bg-primary-700 hover:bg-primary-800"
             >
               Reportar primer incidente
             </Link>

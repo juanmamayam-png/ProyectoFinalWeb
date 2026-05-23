@@ -1,25 +1,27 @@
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/layout/ProtectedRoute';
-import PublicRoute from './components/layout/PublicRoute';
-import Navbar from './components/layout/Navbar';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ReportIncidentPage from './pages/ReportIncidentPage';
-import MyIncidentsPage from './pages/MyIncidentsPage';
-import IncidentDetailPage from './pages/IncidentDetailPage';
-import AdminPage from './pages/AdminPage';
-import StatisticsPage from './pages/StatisticsPage';
+import ProtectedRoute from './components/layout/ProtectedRoute/ProtectedRoute';
+import PublicRoute from './components/layout/PublicRoute/PublicRoute';
+import Navbar from './components/layout/Navbar/Navbar';
+import Footer from './components/layout/Footer/Footer';
+import HomePage from './pages/HomePage/HomePage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import ReportIncidentPage from './pages/ReportIncidentPage/ReportIncidentPage';
+import MyIncidentsPage from './pages/MyIncidentsPage/MyIncidentsPage';
+import IncidentDetailPage from './pages/IncidentDetailPage/IncidentDetailPage';
+import AdminPage from './pages/AdminPage/AdminPage';
+import StatisticsPage from './pages/StatisticsPage/StatisticsPage';
 import { useAuth } from './contexts/AuthContext';
 
 function Layout({ children }) {
   const { currentUser } = useAuth();
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {currentUser && <Navbar />}
-      <main className={currentUser ? 'pt-0' : ''}>
+      <main className="flex-1">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

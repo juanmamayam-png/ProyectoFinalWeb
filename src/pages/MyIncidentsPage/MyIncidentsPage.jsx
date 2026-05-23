@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { getUserIncidents } from '../services/incidentService';
-import IncidentCard from '../components/incidents/IncidentCard';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Alert from '../components/ui/Alert';
+import { useAuth } from '../../contexts/AuthContext';
+import { getUserIncidents } from '../../services/incidentService';
+import IncidentCard from '../../components/incidents/IncidentCard/IncidentCard';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
+import Alert from '../../components/ui/Alert/Alert';
 import { Link } from 'react-router-dom';
 
 const FILTERS = ['Todos', 'Reportado', 'En proceso', 'Resuelto'];
@@ -49,7 +49,7 @@ export default function MyIncidentsPage() {
         </div>
         <Link
           to="/report"
-          className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-lg transition-colors text-sm"
+          className="inline-flex items-center space-x-2 text-white font-semibold px-4 py-2.5 rounded-lg transition-colors text-sm bg-primary-700 hover:bg-primary-800"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -73,8 +73,8 @@ export default function MyIncidentsPage() {
             className={
               "px-4 py-1.5 rounded-full text-sm font-medium border transition-colors " +
               (activeFilter === filter
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400 hover:text-blue-600')
+                ? 'bg-primary-700 text-white border-primary-700'
+                : 'bg-white text-gray-600 border-gray-300 hover:border-primary-500 hover:text-primary-700')
             }
           >
             {filter}
@@ -97,7 +97,7 @@ export default function MyIncidentsPage() {
               <p className="text-gray-500 text-sm mb-4">No has reportado incidentes aun.</p>
               <Link
                 to="/report"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                className="inline-block text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors bg-primary-700 hover:bg-primary-800"
               >
                 Reportar primer incidente
               </Link>

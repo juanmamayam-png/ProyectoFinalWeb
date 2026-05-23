@@ -1,8 +1,9 @@
+
 export default function IncidentStatusBadge({ estado }) {
   const styles = {
     Reportado: 'bg-red-100 text-red-700 border border-red-200',
     'En proceso': 'bg-yellow-100 text-yellow-700 border border-yellow-200',
-    Resuelto: 'bg-green-100 text-green-700 border border-green-200',
+    Resuelto: 'bg-primary-100 text-primary-700 border border-primary-200',
   };
 
   const icons = {

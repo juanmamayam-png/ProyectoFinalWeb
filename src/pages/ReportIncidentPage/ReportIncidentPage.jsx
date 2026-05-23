@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { createIncident } from '../services/incidentService';
-import { uploadIncidentImage } from '../services/storageService';
-import Alert from '../components/ui/Alert';
+import { useAuth } from '../../contexts/AuthContext';
+import { createIncident } from '../../services/incidentService';
+import { uploadIncidentImage } from '../../services/storageService';
+import Alert from '../../components/ui/Alert/Alert';
 
 const TIPOS = [
   'Baño/Sanitario',
@@ -17,16 +17,20 @@ const TIPOS = [
 ];
 
 const UBICACIONES = [
-  'Bloque A',
-  'Bloque B',
-  'Bloque C',
-  'Cafetería',
+  'Bloque 1',
+  'Bloque 2',
+  'Bloque 2 piso 2',
+  'Bloque 3',
+  'Bloque 4',
+  'Bloque 5',
+  'Bloque 5 piso 2',
+  'Bloque 6',
+  'Bloque 7',
+  'Bloque 7 piso 2',
   'Biblioteca',
   'Laboratorios',
   'Auditorio',
-  'Baños Planta 1',
-  'Baños Planta 2',
-  'Parqueadero',
+  'Baños',
   'Otro',
 ];
 
@@ -115,8 +119,8 @@ export default function ReportIncidentPage() {
   if (success) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
-          <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-full mb-6">
+          <svg className="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
@@ -149,7 +153,7 @@ export default function ReportIncidentPage() {
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent bg-white"
           >
             <option value="">Selecciona un tipo...</option>
             {TIPOS.map((t) => (
@@ -168,7 +172,7 @@ export default function ReportIncidentPage() {
             onChange={(e) => setDescripcion(e.target.value)}
             required
             rows={4}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent resize-none"
             placeholder="Describe el incidente con detalle (mínimo 20 caracteres)..."
           />
           <p className="text-xs text-gray-400 mt-1">{descripcion.length} caracteres{descripcion.length < 20 && ' (mínimo 20)'}</p>
@@ -179,7 +183,7 @@ export default function ReportIncidentPage() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Fotografía <span className="text-red-500">*</span>
           </label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors">
             <input
               type="file"
               accept="image/*"
@@ -196,7 +200,7 @@ export default function ReportIncidentPage() {
                     alt="Vista previa"
                     className="max-h-48 mx-auto rounded-lg object-contain mb-2"
                   />
-                  <p className="text-xs text-blue-600">Clic para cambiar la imagen</p>
+                  <p className="text-xs text-primary-700">Clic para cambiar la imagen</p>
                 </div>
               ) : (
                 <div className="py-4">
@@ -220,7 +224,7 @@ export default function ReportIncidentPage() {
             <select
               value={UBICACIONES.includes(ubicacionTexto) ? ubicacionTexto : ''}
               onChange={(e) => setUbicacionTexto(e.target.value)}
-              className="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent bg-white"
             >
               <option value="">Selecciona una ubicación...</option>
               {UBICACIONES.map((u) => (
@@ -233,7 +237,7 @@ export default function ReportIncidentPage() {
             value={ubicacionTexto}
             onChange={(e) => setUbicacionTexto(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
             placeholder="O escribe la ubicación específica..."
           />
         </div>
@@ -247,7 +251,7 @@ export default function ReportIncidentPage() {
             type="button"
             onClick={handleGetLocation}
             disabled={gpsLoading}
-            className="inline-flex items-center space-x-2 border border-blue-300 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+            className="inline-flex items-center space-x-2 border border-primary-600 text-primary-700 hover:bg-primary-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -257,7 +261,7 @@ export default function ReportIncidentPage() {
           </button>
           {gpsError && <p className="text-red-500 text-xs mt-1">{gpsError}</p>}
           {latitud && longitud && (
-            <p className="text-xs text-green-600 mt-1">
+            <p className="text-xs text-primary-600 mt-1">
               Ubicación obtenida: {latitud.toFixed(5)}, {longitud.toFixed(5)}
             </p>
           )}
@@ -268,7 +272,7 @@ export default function ReportIncidentPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center space-x-2"
+            className="w-full text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center space-x-2 disabled:opacity-70 bg-primary-700 hover:bg-primary-800 disabled:bg-primary-800"
           >
             {loading ? (
               <>
