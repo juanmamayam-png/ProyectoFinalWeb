@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getIncidents, updateIncidentStatus, groupIncidents, updateGroupStatus, deleteIncident } from '../../services/incidentService';
+import { getIncidents, updateIncidentStatus, groupIncidents, updateGroupStatus, deleteIncident, markIncidentNotified } from '../../services/incidentService';
 import { deleteIncidentImage } from '../../services/storageService';
+import { notifyAdmins } from '../../services/notificationService';
 import IncidentStatusBadge from '../../components/incidents/IncidentStatusBadge/IncidentStatusBadge';
 import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
 import Alert from '../../components/ui/Alert/Alert';
@@ -43,11 +44,42 @@ export default function AdminPage() {
     try {
       const data = await getIncidents();
       setIncidents(data);
+      await checkStuckIncidents(data);
     } catch (err) {
       console.error(err);
       setError('Error al cargar los incidentes.');
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function checkStuckIncidents(loadedIncidents) {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+    const stuck = loadedIncidents.filter((i) => {
+      if (i.estado === 'Resuelto' || i.notificacionEstancadoEnviada) return false;
+      const fecha = i.fechaCreacion?.toDate?.() ?? new Date(i.fechaCreacion);
+      return fecha < threeDaysAgo;
+    });
+
+    for (const inc of stuck) {
+      await notifyAdmins(
+        `El incidente "${inc.tipo}" en ${inc.ubicacionTexto} lleva más de 3 días sin resolverse`,
+        'incidente_estancado',
+        inc.id
+      );
+      await markIncidentNotified(inc.id);
+    }
+
+    if (stuck.length > 0) {
+      setIncidents((prev) =>
+        prev.map((i) =>
+          stuck.find((s) => s.id === i.id)
+            ? { ...i, notificacionEstancadoEnviada: true }
+            : i
+        )
+      );
     }
   }
 

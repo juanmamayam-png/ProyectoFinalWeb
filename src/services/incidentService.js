@@ -14,6 +14,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { createNotification, notifyAdmins } from './notificationService';
 
 const COLLECTION = 'incidentes';
 
@@ -33,6 +34,14 @@ export async function createIncident(data) {
   };
 
   const docRef = await addDoc(collection(db, COLLECTION), incident);
+
+  // RF-14: notify all admins of new incident
+  await notifyAdmins(
+    `Nuevo incidente "${data.tipo}" reportado por ${data.usuarioNombre} en ${data.ubicacionTexto}`,
+    'nuevo_incidente',
+    docRef.id
+  );
+
   return docRef.id;
 }
 
@@ -65,13 +74,23 @@ export async function getIncidentById(id) {
 }
 
 export async function updateIncidentStatus(id, estado) {
+  const incident = await getIncidentById(id);
   const docRef = doc(db, COLLECTION, id);
   await updateDoc(docRef, { estado });
 
-  // If this incident belongs to a group, update all incidents in the group
-  const incident = await getIncidentById(id);
-  if (incident && incident.grupoId) {
-    await updateGroupStatus(incident.grupoId, estado);
+  if (incident) {
+    if (incident.grupoId) {
+      // Group update also handles notifications for all group members
+      await updateGroupStatus(incident.grupoId, estado);
+    } else {
+      // RF-13: notify the reporter of status change
+      await createNotification(
+        incident.usuarioId,
+        `Tu incidente "${incident.tipo}" cambió de estado a "${estado}"`,
+        'estado_cambiado',
+        id
+      );
+    }
   }
 }
 
@@ -95,6 +114,23 @@ export async function updateGroupStatus(grupoId, estado) {
     batch.update(d.ref, { estado });
   });
   await batch.commit();
+
+  // RF-13: notify each reporter in the group
+  await Promise.all(
+    snapshot.docs.map((d) => {
+      const data = d.data();
+      return createNotification(
+        data.usuarioId,
+        `Tu incidente "${data.tipo}" (agrupado) cambió de estado a "${estado}"`,
+        'estado_cambiado',
+        d.id
+      );
+    })
+  );
+}
+
+export async function markIncidentNotified(id) {
+  await updateDoc(doc(db, COLLECTION, id), { notificacionEstancadoEnviada: true });
 }
 
 export async function deleteIncident(id) {

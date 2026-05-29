@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
+import NotificationBell from '../../ui/NotificationBell/NotificationBell';
 
 export default function Navbar() {
   const { currentUser, userProfile, logout } = useAuth();
@@ -65,6 +66,7 @@ export default function Navbar() {
 
           {/* User info + logout */}
           <div className="hidden md:flex items-center space-x-3">
+            <NotificationBell />
             <div className="text-right">
               <p className="text-white text-sm font-medium">
                 {userProfile?.nombre || currentUser?.email}
@@ -82,7 +84,8 @@ export default function Navbar() {
           </div>
 
           {/* Mobile hamburger */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <NotificationBell />
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-white focus:outline-none p-2"
