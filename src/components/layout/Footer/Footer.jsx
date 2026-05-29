@@ -3,7 +3,6 @@ export default function Footer() {
     <footer className="bg-white border-t border-gray-200 mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        {/* Title */}
         <div className="mb-6">
           <h2 className="text-lg font-extrabold text-primary-700 uppercase tracking-wide">
             Universidad de la Amazonia
@@ -11,10 +10,8 @@ export default function Footer() {
           <p className="text-sm text-gray-500">NIT: 891190346-1</p>
         </div>
 
-        {/* 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
 
-          {/* Col 1 — Links */}
           <div>
             <h3 className="text-xs font-bold text-primary-700 uppercase tracking-widest mb-3">
               Enlaces de interés
@@ -42,7 +39,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 2 — Contact */}
           <div>
             <h3 className="text-xs font-bold text-primary-700 uppercase tracking-widest mb-3">
               Contáctanos
@@ -81,7 +77,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 3 — Map */}
           <div>
             <h3 className="text-xs font-bold text-primary-700 uppercase tracking-widest mb-3">
               Localización física
@@ -101,9 +96,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Social + gov.co + copyright */}
         <div className="border-t border-gray-100 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Redes sociales */}
           <div className="flex items-center gap-3">
             {[
               {
@@ -137,7 +130,6 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* GOV.CO */}
           <a
             href="https://www.gov.co/"
             target="_blank"
@@ -150,7 +142,6 @@ export default function Footer() {
             />
           </a>
 
-          {/* Copyright */}
           <p className="text-xs text-gray-400">
             © {new Date().getFullYear()} Universidad de la Amazonia. Todos los derechos reservados.
           </p>

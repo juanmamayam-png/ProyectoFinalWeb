@@ -10,7 +10,6 @@ export const uploadIncidentImage = async (file, userId) => {
 
 export const deleteIncidentImage = async (imagenURL) => {
   if (!imagenURL) return;
-  // Extract the storage path from the download URL
   const match = decodeURIComponent(imagenURL).match(/\/o\/(.+?)(\?|$)/);
   if (!match) return;
   const imageRef = ref(storage, match[1]);
