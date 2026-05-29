@@ -71,7 +71,6 @@ export default function StatisticsPage() {
         </button>
       </div>
 
-      {/* Filtro de fechas */}
       <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6 flex flex-wrap items-end gap-4 print:hidden">
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">Desde</label>
@@ -103,7 +102,6 @@ export default function StatisticsPage() {
         <LoadingSpinner />
       ) : (
         <>
-          {/* Tarjetas resumen */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-primary-50 border border-primary-200 rounded-xl p-4 text-center">
               <p className="text-3xl font-bold text-primary-700">{total}</p>
@@ -120,7 +118,6 @@ export default function StatisticsPage() {
             })}
           </div>
 
-          {/* Gráficas */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-white rounded-xl border border-gray-200 p-5">
               <h2 className="text-base font-semibold text-gray-800 mb-4">Incidentes por Tipo</h2>
@@ -170,7 +167,6 @@ export default function StatisticsPage() {
             </div>
           </div>
 
-          {/* Tabla detalle */}
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="px-5 py-4 border-b border-gray-100">
               <h2 className="text-base font-semibold text-gray-800">Detalle del Período</h2>

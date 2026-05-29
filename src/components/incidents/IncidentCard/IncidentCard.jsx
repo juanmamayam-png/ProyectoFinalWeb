@@ -42,13 +42,13 @@ export default function IncidentCard({ incident }) {
     : descripcion;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+    <div className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200">
       {imagenURL && (
         <div className="h-36 overflow-hidden">
           <img
             src={imagenURL}
             alt="Imagen del incidente"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
       )}

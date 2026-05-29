@@ -64,7 +64,6 @@ export default function MyIncidentsPage() {
         </div>
       )}
 
-      {/* Filter buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
         {FILTERS.map((filter) => (
           <button

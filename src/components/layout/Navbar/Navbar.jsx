@@ -30,7 +30,6 @@ export default function Navbar() {
     <nav className="shadow-lg bg-primary-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <img
@@ -41,7 +40,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop links */}
           <div className="hidden md:flex items-center space-x-6">
             <Link to="/" className={isActive('/')}>
               Inicio
@@ -64,7 +62,6 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* User info + logout */}
           <div className="hidden md:flex items-center space-x-3">
             <NotificationBell />
             <div className="text-right">
@@ -83,7 +80,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile hamburger */}
           <div className="md:hidden flex items-center gap-2">
             <NotificationBell />
             <button
@@ -105,9 +101,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-primary-900 px-4 pt-2 pb-4 space-y-2">
+        <div className="md:hidden bg-primary-900 px-4 pt-2 pb-4 space-y-2 animate-slide-down">
           <Link
             to="/"
             className="block text-primary-100 hover:text-white py-2 transition-colors"

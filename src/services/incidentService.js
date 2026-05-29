@@ -35,7 +35,6 @@ export async function createIncident(data) {
 
   const docRef = await addDoc(collection(db, COLLECTION), incident);
 
-  // RF-14: notify all admins of new incident
   await notifyAdmins(
     `Nuevo incidente "${data.tipo}" reportado por ${data.usuarioNombre} en ${data.ubicacionTexto}`,
     'nuevo_incidente',
@@ -80,10 +79,8 @@ export async function updateIncidentStatus(id, estado) {
 
   if (incident) {
     if (incident.grupoId) {
-      // Group update also handles notifications for all group members
       await updateGroupStatus(incident.grupoId, estado);
     } else {
-      // RF-13: notify the reporter of status change
       await createNotification(
         incident.usuarioId,
         `Tu incidente "${incident.tipo}" cambió de estado a "${estado}"`,
@@ -115,7 +112,6 @@ export async function updateGroupStatus(grupoId, estado) {
   });
   await batch.commit();
 
-  // RF-13: notify each reporter in the group
   await Promise.all(
     snapshot.docs.map((d) => {
       const data = d.data();

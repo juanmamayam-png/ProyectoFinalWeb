@@ -57,7 +57,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Panel izquierdo — contexto */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-center p-8 text-white bg-gradient-to-br from-primary-800 to-primary-700">
         <div className="flex justify-center mb-6">
           <div className="bg-white rounded-2xl px-6 py-4 shadow-xl">
@@ -77,8 +76,8 @@ export default function LoginPage() {
         </p>
 
         <div className="space-y-3 flex flex-col items-center">
-          {features.map((f) => (
-            <div key={f.title} className="bg-white rounded-xl px-4 py-3 shadow-md flex items-center gap-3 w-80">
+          {features.map((f, i) => (
+            <div key={f.title} className="bg-white rounded-xl px-4 py-3 shadow-md flex items-center gap-3 w-80 animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
               <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 bg-primary-100 rounded-lg">
                 <svg className="w-4 h-4 text-primary-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {f.icon}
@@ -93,10 +92,8 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Panel derecho — formulario */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 bg-primary-50">
         <div className="w-full max-w-md">
-          {/* Encabezado visible solo en móvil */}
           <div className="lg:hidden text-center mb-4">
             <div className="inline-block bg-white rounded-2xl px-5 py-2 shadow-md mb-2">
               <img
@@ -108,7 +105,7 @@ export default function LoginPage() {
             <h1 className="text-lg font-bold text-gray-900">Incidentes UniAmazonia</h1>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 animate-fade-in-up">
             <div className="mb-5">
               <h3 className="text-xl font-bold text-gray-900">Iniciar sesión</h3>
               <p className="text-gray-500 text-sm mt-0.5">

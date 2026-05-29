@@ -195,7 +195,6 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Filters */}
       <div className="bg-white rounded-xl border border-gray-200 p-4 mb-4 flex flex-wrap gap-4 items-end">
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">Estado</label>
@@ -226,7 +225,6 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* Selection toolbar */}
       {selected.length > 0 && (
         <div className="bg-primary-50 border border-primary-200 rounded-xl p-3 mb-4 flex flex-wrap items-center gap-3">
           <span className="text-primary-800 text-sm font-medium">
@@ -371,7 +369,6 @@ export default function AdminPage() {
           </div>
         </div>
       )}
-      {/* Confirm delete modal */}
       {confirmDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6">

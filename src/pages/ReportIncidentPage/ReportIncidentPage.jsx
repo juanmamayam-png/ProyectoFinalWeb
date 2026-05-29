@@ -132,7 +132,7 @@ export default function ReportIncidentPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-900">Reportar Incidente</h1>
         <p className="text-gray-500 mt-1">Completa el formulario para registrar un nuevo incidente.</p>
       </div>
@@ -143,8 +143,7 @@ export default function ReportIncidentPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-6">
-        {/* Tipo */}
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-6 animate-fade-in-up" style={{ animationDelay: '80ms' }}>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Tipo de incidente <span className="text-red-500">*</span>
@@ -162,7 +161,6 @@ export default function ReportIncidentPage() {
           </select>
         </div>
 
-        {/* Descripcion */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Descripción <span className="text-red-500">*</span>
@@ -178,7 +176,6 @@ export default function ReportIncidentPage() {
           <p className="text-xs text-gray-400 mt-1">{descripcion.length} caracteres{descripcion.length < 20 && ' (mínimo 20)'}</p>
         </div>
 
-        {/* Fotografía */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Fotografía <span className="text-red-500">*</span>
@@ -215,7 +212,6 @@ export default function ReportIncidentPage() {
           </div>
         </div>
 
-        {/* Ubicación */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Ubicación <span className="text-red-500">*</span>
@@ -242,7 +238,6 @@ export default function ReportIncidentPage() {
           />
         </div>
 
-        {/* GPS */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Ubicación GPS (opcional)
@@ -267,7 +262,6 @@ export default function ReportIncidentPage() {
           )}
         </div>
 
-        {/* Submit */}
         <div className="pt-2">
           <button
             type="submit"

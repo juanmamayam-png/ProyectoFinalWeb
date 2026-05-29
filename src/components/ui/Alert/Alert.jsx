@@ -38,7 +38,7 @@ export default function Alert({ type = 'info', message, onClose }) {
   const { container, icon } = styles[type] || styles.info;
 
   return (
-    <div className={`flex items-start p-4 rounded-lg ${container}`} role="alert">
+    <div className={`flex items-start p-4 rounded-lg animate-fade-in ${container}`} role="alert">
       <div className="flex-shrink-0 mt-0.5">{icon}</div>
       <div className="ml-3 flex-1">
         <p className="text-sm font-medium">{message}</p>
