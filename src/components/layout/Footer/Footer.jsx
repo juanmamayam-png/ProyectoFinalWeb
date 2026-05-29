@@ -144,7 +144,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <img
-              src="/src/Icons/gov-co.jpg"
+              src="/Icons/gov-co.jpg"
               alt="GOV.CO"
               className="h-8 w-auto object-contain"
             />

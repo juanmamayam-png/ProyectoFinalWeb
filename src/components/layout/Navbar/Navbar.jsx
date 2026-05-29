@@ -34,7 +34,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <img
-                src="/src/Icons/LogoUANegativo.png"
+                src="/Icons/LogoUANegativo.png"
                 alt="Logo Universidad de la Amazonia"
                 className="h-14 w-auto object-contain drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)]"
               />

@@ -62,7 +62,7 @@ export default function LoginPage() {
         <div className="flex justify-center mb-6">
           <div className="bg-white rounded-2xl px-6 py-4 shadow-xl">
             <img
-              src="/src/Icons/Logouniamazonia.png"
+              src="/Icons/Logouniamazonia.png"
               alt="Logo Universidad de la Amazonia"
               className="h-28 w-auto object-contain"
             />
@@ -100,7 +100,7 @@ export default function LoginPage() {
           <div className="lg:hidden text-center mb-4">
             <div className="inline-block bg-white rounded-2xl px-5 py-2 shadow-md mb-2">
               <img
-                src="/src/Icons/Logouniamazonia.png"
+                src="/Icons/Logouniamazonia.png"
                 alt="Logo Universidad de la Amazonia"
                 className="h-16 w-auto object-contain"
               />
